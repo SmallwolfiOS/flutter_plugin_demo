@@ -11,8 +11,14 @@ class Hello {
     return version;
   }
   //这个是直接从flutter层面封装，不需要channel进行桥接
-  static int calculate (int a, int b){
-    return a + b;
+//  static int calculate (int a, int b){
+//    return a + b;
+//  }
+  static Future<int> calculate (int a, int b) async {
+    final String result = await _channel.invokeMethod('calculate', {
+      'a': a,
+      'b': b
+    });
+    return int.parse(result);
   }
-
 }
